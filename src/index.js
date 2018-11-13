@@ -1,3 +1,9 @@
 // TODO: Render the `App` component to the DOM
 
-ReactDOM.render(<App/>, document.getElementById('app'));
+// class video extends React.Component
+
+// constructor(props)
+// super(props)
+//
+// data={this.exampleVideoData}
+ReactDOM.render(<App data={window.exampleVideoData}/>, document.getElementById('app'));
