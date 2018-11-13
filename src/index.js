@@ -6,4 +6,4 @@
 // super(props)
 //
 // data={this.exampleVideoData}
-ReactDOM.render(<App data={window.exampleVideoData}/>, document.getElementById('app'));
+ReactDOM.render(<App/>, document.getElementById('app'));

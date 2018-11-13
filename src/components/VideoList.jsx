@@ -1,19 +1,18 @@
 
 //let data = this.exampleVideoData
 
-var VideoList = (props) => (
-  <div className="video-list">
-    {console.log('this is data: ', props)}
-    {props.videos.map(video => (
-      <VideoListEntry key={video.id.videoId} video={video}/>
-    ))}
-    {/* <div><h5><em>videoListEntry</em> view goes here</h5></div>
-    <div><h5><em>videoListEntry</em> view goes here</h5></div>
-    <div><h5><em>videoListEntry</em> view goes here</h5></div>
-    <div><h5><em>videoListEntry</em> view goes here</h5></div>
-    <div><h5><em>videoListEntry</em> view goes here</h5></div> */}
-  </div>
-);
+var VideoList = (props) => {
+  { /* {console.log('this is the props object: ', props)} */ }
+  { /* {console.log('this is props.videos: ', Array.isArray(props.videos))} */ }
+  return (
+    <div className="video-list">
+      {props.videos.map(video => (
+        <VideoListEntry key={video.id.videoId} video={video}/>
+      ))}
+    </div>
+  );
+};
+
 
 // PropTypes tell other developers what `props` a component expects
 // Warnings will be shown in the console when the defined rules are violated
