@@ -1,4 +1,4 @@
-
+// chases Youtube API key: AIzaSyCpyOuDL6IhjX7cesQRveKjZtRvmxNMvsk
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -30,7 +30,7 @@ class App extends React.Component {
             <div><h5><em><VideoPlayer video={this.state.currentVideo}/></em> view goes here</h5></div>
           </div>
           <div className="col-md-5">
-            <div><h5><em><VideoList videos={this.state.videos} onClick={(video)=> this.changeVideo(video)}/></em> view goes here</h5></div>
+            <div><h5><em><VideoList videos={this.state.videos} onClick={(video) => this.changeVideo(video)}/></em> view goes here</h5></div>
           </div>
         </div>
       </div>
