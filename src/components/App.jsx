@@ -7,6 +7,16 @@ class App extends React.Component {
       currentVideo: window.exampleVideoData[0]
     };
   }
+
+  changeVideo(video) {
+    this.setState({
+      currentVideo: video
+    });
+  }
+  /*
+  we need to create a method that takes in a specific video title that alters the state upon being clicked.
+  We need to have the same click event passed down to the children of app
+  */
   render() {
     return (
       <div>
@@ -20,7 +30,7 @@ class App extends React.Component {
             <div><h5><em><VideoPlayer video={this.state.currentVideo}/></em> view goes here</h5></div>
           </div>
           <div className="col-md-5">
-            <div><h5><em><VideoList videos={this.state.videos}/></em> view goes here</h5></div>
+            <div><h5><em><VideoList videos={this.state.videos} onClick={(video)=> this.changeVideo(video)}/></em> view goes here</h5></div>
           </div>
         </div>
       </div>
