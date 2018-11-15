@@ -6,7 +6,29 @@ class App extends React.Component {
       videos: window.exampleVideoData,
       currentVideo: window.exampleVideoData[0]
     };
+
   }
+
+  // window.searchYouTube({query=''}, (videos) => {
+  //   {console.log(this.state.videos)}
+  //   this.setState({
+  //     videos: videos.slice(1),
+  //     currentVideo: videos[0]
+  //   }, () => {console.log('video arr', this.state.videos)});
+  // });
+  componentDidMount() {
+
+    const callback = (data) => {
+      console.log(data);
+      this.setState({
+        videos: data,
+        currentVideo: data[0]
+      });
+    };
+
+    this.props.searchYouTube(callback);
+  }
+
 
   changeVideo(video) {
     this.setState({
@@ -18,6 +40,18 @@ class App extends React.Component {
   We need to have the same click event passed down to the children of app
   */
   render() {
+    // if (_.isNull(this.state.currentVideo)) {
+    //   return (
+    //     <div>
+    //     <nav className="navbar">
+    //       <div className="col-md-6 offset-md-3">
+    //         <div><h5><em><Search/></em> view goes here</h5></div>
+    //       </div>
+    //     </nav>
+    //     </div>
+    //   )
+    // }
+
     return (
       <div>
         <nav className="navbar">

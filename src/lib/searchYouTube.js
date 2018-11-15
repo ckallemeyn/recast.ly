@@ -1,16 +1,46 @@
-var searchYouTube = ({ max=5, key=YOUTUBE_API_KEY, query=''}, callback) => {
-  // TODO
-  // options = options || {};
-  // write ajax call in this function to get youtube Data from api
+// var searchYouTube = (options, callback) => {
+//   // { max=5, key=YOUTUBE_API_KEY, query=''}
+//   options = options || {
+//     max: 5,
+//     key: window.YOUTUBE_API_KEY,
+//     query: ''
+//   };
+
+//   // write ajax call in this function to get youtube Data from api
+//   $.get('https://www.googleapis.com/youtube/v3/search', {
+//     part: 'snippet',
+//     key: window.YOUTUBE_API_KEY,
+//     q: '',
+//     maxResults: max,
+//     type: 'video',
+//     videoEmbeddable: 'true'
+//   }).done( videoData => {
+//     callback(videoData.items);
+//   })
+// .fail((err) => console.log('get request failed: ', err));
+
+// };
+var searchYouTube = (callback) => {
   $.get('https://www.googleapis.com/youtube/v3/search', {
     part: 'snippet',
-    videoEmbeddable: 'true',
-    maxResults: max,
-    q: query,
-    key: key,
+    key: window.YOUTUBE_API_KEY,
+    q: '',
+    maxResults: 5,
     type: 'video',
-  }).done((videoData) => callback(videoData.items)).fail((err)=>console.log('get request failed: ', err));
+    videoEmbeddable: 'true'
+  })
+    .done(({items}) => {
+      if (callback) {
+        callback(items);
+      }
+    })
+    .fail(({responseJSON}) => {
+      responseJSON.error.errors.forEach((err) =>
+        console.error(err)
+      );
+    });
 };
+
 
 window.searchYouTube = searchYouTube;
 
