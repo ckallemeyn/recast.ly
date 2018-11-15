@@ -5,40 +5,52 @@ class App extends React.Component {
     this.state = {
       videoList: window.exampleVideoData,
       currentVideo: window.exampleVideoData[0],
-      query: 'Star Wars'
+      query: 'Star Wars bloopers'
     };
+    this.findTextChange = this.findTextChange.bind(this);
   }
 
-  // window.searchYouTube({query=''}, (videos) => {
-  //   {console.log(this.state.videos)}
-  //   this.setState({
-  //     videos: videos.slice(1),
-  //     currentVideo: videos[0]
-  //   }, () => {console.log('video arr', this.state.videos)});
-  // });
+  findTextChange(e) {
+    let query = e.target.value;
+    if (query !== this.state.query) {
+      this.retrieveVideos(query);
+    }
+  }
 
-  componentDidMount() {
-    const callback = (data) => {
+
+  retrieveVideos(q) {
+    let userQuery = q ? q : this.state.query;
+    let options = {
+      key: window.YOUTUBE_API_KEY,
+      max: 5,
+      query: userQuery
+    };
+    this.props.searchYouTube(options, (data) => {
       this.setState({
         videoList: data,
-        currentVideo: data[0]
+        currentVideo: data[0],
+        query: q
       });
-    };
-    this.props.searchYouTube(callback);
+    });
   }
-  // retrieveVideos(q) {
-  //   let options = {
-  //     key: window.YOUTUBE_API_KEY,
-  //     max: 5,
-  //     query: q ? q : this.state.query
-  //   }
-  //   this.props.searchYouTube(options, (data) => {
-  //     this.setState({
-  //       videoList: data,
-  //       currentVideo: data[0],
-  //     });
-  //   })
-  // }
+
+  componentDidMount() {
+    this.retrieveVideos();
+    // const options = {
+    //   key: window.YOUTUBE_API_KEY,
+    //   max: 5,
+    //   query: 'Jar-Jar Binks'
+    // }
+
+    // const callback = (data) => {
+    //   this.setState({
+    //     videoList: data,
+    //     currentVideo: data[0],
+    //     query: 'Star Wars'
+    //   });
+    // };
+    // this.props.searchYouTube(options, callback);
+  }
 
   changeVideo(video) {
     this.setState({
@@ -66,7 +78,7 @@ class App extends React.Component {
       <div>
         <nav className="navbar">
           <div className="col-md-6 offset-md-3">
-            <div><h5><em><Search/></em> view goes here</h5></div>
+            <div><h5><em><Search findTextChange={this.findTextChange}/></em> view goes here</h5></div>
           </div>
         </nav>
         <div className="row">

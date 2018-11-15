@@ -7,6 +7,8 @@ var searchYouTube = ({ max=5, key=YOUTUBE_API_KEY, query=''}, successCB) => {
   //   max: 5
   // }
 
+  // why can't we pass in an object literals values to an AJAX GET request?
+  // How come destructing works in this case, and the object literal doesn't?
   $.ajax({
     type: 'GET',
     url: 'https://www.googleapis.com/youtube/v3/search',
