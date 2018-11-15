@@ -3,10 +3,10 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      videos: window.exampleVideoData,
-      currentVideo: window.exampleVideoData[0]
+      videoList: window.exampleVideoData,
+      currentVideo: window.exampleVideoData[0],
+      query: 'Star Wars'
     };
-
   }
 
   // window.searchYouTube({query=''}, (videos) => {
@@ -16,19 +16,29 @@ class App extends React.Component {
   //     currentVideo: videos[0]
   //   }, () => {console.log('video arr', this.state.videos)});
   // });
-  componentDidMount() {
 
+  componentDidMount() {
     const callback = (data) => {
-      console.log(data);
       this.setState({
-        videos: data,
+        videoList: data,
         currentVideo: data[0]
       });
     };
-
     this.props.searchYouTube(callback);
   }
-
+  // retrieveVideos(q) {
+  //   let options = {
+  //     key: window.YOUTUBE_API_KEY,
+  //     max: 5,
+  //     query: q ? q : this.state.query
+  //   }
+  //   this.props.searchYouTube(options, (data) => {
+  //     this.setState({
+  //       videoList: data,
+  //       currentVideo: data[0],
+  //     });
+  //   })
+  // }
 
   changeVideo(video) {
     this.setState({
@@ -39,19 +49,19 @@ class App extends React.Component {
   we need to create a method that takes in a specific video title that alters the state upon being clicked.
   We need to have the same click event passed down to the children of app
   */
-  render() {
-    // if (_.isNull(this.state.currentVideo)) {
-    //   return (
-    //     <div>
-    //     <nav className="navbar">
-    //       <div className="col-md-6 offset-md-3">
-    //         <div><h5><em><Search/></em> view goes here</h5></div>
-    //       </div>
-    //     </nav>
-    //     </div>
-    //   )
-    // }
+  // if (_.isNull(this.state.currentVideo)) {
+  //   return (
+  //     <div>
+  //     <nav className="navbar">
+  //       <div className="col-md-6 offset-md-3">
+  //         <div><h5><em><Search/></em> view goes here</h5></div>
+  //       </div>
+  //     </nav>
+  //     </div>
+  //   )
+  // }
 
+  render() {
     return (
       <div>
         <nav className="navbar">
@@ -64,12 +74,13 @@ class App extends React.Component {
             <div><h5><em><VideoPlayer video={this.state.currentVideo}/></em> view goes here</h5></div>
           </div>
           <div className="col-md-5">
-            <div><h5><em><VideoList videos={this.state.videos} onClick={(video) => this.changeVideo(video)}/></em> view goes here</h5></div>
+            <div><h5><em><VideoList videos={this.state.videoList} onClick={(video) => this.changeVideo(video)}/></em> view goes here</h5></div>
           </div>
         </div>
       </div>
     );
   }
+
 }
 
 
