@@ -39,5 +39,16 @@ console.log(window.searchYouTube);
 
 // videoList={videoList}
 // window.searchYouTube()
+// var initialVideos = [];
+// var options = {
+//     max: 5,
+//     key: window.YOUTUBE_API_KEY,
+//     query: 'Star Wars Bloopers'
+// };
+// window.searchYouTube(options, (data)=>{
+//   initialVideos = data;
+// });
+// initialVideos={initialVideos}
+ReactDOM.render(<App searchYouTube={window.searchYouTube}/>,document.getElementById('app'));
 
-ReactDOM.render(<App  searchYouTube={window.searchYouTube}/>,document.getElementById('app'));
+

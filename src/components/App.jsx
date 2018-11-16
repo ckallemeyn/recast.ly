@@ -7,31 +7,62 @@ class App extends React.Component {
       currentVideo: window.exampleVideoData[0],
       query: 'Star Wars bloopers'
     };
-
-    this.findTextChange = this.findTextChange.bind(this);
+    console.log("props.initialVideos", props.initialVideos);
+    // this.findTextChange = this.findTextChange.bind(this);
     this.retrieveVideos = this.retrieveVideos.bind(this);
     this.searchBtnClicked = this.searchBtnClicked.bind(this);
-    this.secondsPassed = Date.now();
-    this.initialSearch = true;
-
+    // this.secondsPassed = Date.now();
+    // this.initialSearch = true;
+    this.debouncedResultFunc = this.debounce(this.debouncedResultFunc, 1500);
+    this.updateQuery = this.updateQuery.bind(this);
+    this.searchVideos = this.searchVideos.bind(this);
   }
 
-  findTextChange(e) {
-    console.log("event", e.target.parentNode);
-    e.preventDefault();
-    if ((Date.now() >= this.secondsPassed + 5000) || this.initialSearch) {
-      this.initialSearch = false;
-    }
+  debounce(func, wait, immediate) {
+    var timeout;
+    return function executedFunction() {
+      var context = this;
+      var args = arguments;
+      var later = function() {
+        timeout = null;
+        if (!immediate) {
+          func.apply(context, args);
+        }
+      };
+      var callNow = immediate && !timeout;
+      clearTimeout(timeout);
+      timeout = setTimeout(later, wait);
+      if (callNow) {
+        func.apply(context, args);
+      }
+    };
+  }
+  // one function that captures the data from the input
+  // save that value into host function
+  updateQuery(e) {
+    let query = e.target.value;
+    this.setState({
+      query: query
+    }, this.debouncedResultFunc);
+  }
+
+  debouncedResultFunc() {
+    this.retrieveVideos(this.state.query);
+  }
+
+
+  searchVideos(e) {
+    // console.log("event", e.target.parentNode);
+    // e.preventDefault();
+    // if ((Date.now() >= this.secondsPassed + 5000) || this.initialSearch) {
+    //   this.initialSearch = false;
+    // }
     let query = e.target.value;
     if (query !== this.state.query) {
       this.retrieveVideos(query);
     }
   }
   searchBtnClicked(e) {
-    e.preventDefault();
-    if ((Date.now() >= this.secondsPassed + 5000) || this.initialSearch) {
-      this.initialSearch = false;
-    }
     let query = e.target.parentNode.children[0].value;
     if (query !== this.state.query) {
       this.retrieveVideos(query);
@@ -75,7 +106,7 @@ class App extends React.Component {
         <div>
           <nav className="navbar">
             <div className="col-md-6 offset-md-3">
-              <div><h5><em><Search/></em> view goes here</h5></div>
+              <div><h5><em><Search/></em></h5></div>
             </div>
           </nav>
         </div>
@@ -85,15 +116,16 @@ class App extends React.Component {
       <div>
         <nav className="navbar">
           <div className="col-md-6 offset-md-3">
-            <div><h5><em><Search searchBtn={this.searchBtnClicked} findTextChange={this.findTextChange}/></em> view goes here</h5></div>
+            <div><h5><em><Search searchBtn={this.searchBtnClicked}
+              findTextChange={this.updateQuery} searchVideos={this.searchVideos}/></em></h5></div>
           </div>
         </nav>
         <div className="row">
           <div className="col-md-7">
-            <div><h5><em><VideoPlayer video={this.state.currentVideo}/></em> view goes here</h5></div>
+            <div><h5><em><VideoPlayer video={this.state.currentVideo}/></em></h5></div>
           </div>
           <div className="col-md-5">
-            <div><h5><em><VideoList videos={this.state.videoList} onClick={(video) => this.changeVideo(video)}/></em> view goes here</h5></div>
+            <div><h5><em><VideoList videos={this.state.videoList} onClick={(video) => this.changeVideo(video)}/></em></h5></div>
           </div>
         </div>
       </div>
