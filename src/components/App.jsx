@@ -7,16 +7,36 @@ class App extends React.Component {
       currentVideo: window.exampleVideoData[0],
       query: 'Star Wars bloopers'
     };
+
     this.findTextChange = this.findTextChange.bind(this);
+    this.retrieveVideos = this.retrieveVideos.bind(this);
+    this.searchBtnClicked = this.searchBtnClicked.bind(this);
+    this.secondsPassed = Date.now();
+    this.initialSearch = true;
+
   }
 
   findTextChange(e) {
+    console.log("event", e.target.parentNode);
+    e.preventDefault();
+    if ((Date.now() >= this.secondsPassed + 5000) || this.initialSearch) {
+      this.initialSearch = false;
+    }
     let query = e.target.value;
     if (query !== this.state.query) {
       this.retrieveVideos(query);
     }
   }
-
+  searchBtnClicked(e) {
+    e.preventDefault();
+    if ((Date.now() >= this.secondsPassed + 5000) || this.initialSearch) {
+      this.initialSearch = false;
+    }
+    let query = e.target.parentNode.children[0].value;
+    if (query !== this.state.query) {
+      this.retrieveVideos(query);
+    }
+  }
 
   retrieveVideos(q) {
     let userQuery = q ? q : this.state.query;
@@ -25,6 +45,7 @@ class App extends React.Component {
       max: 5,
       query: userQuery
     };
+
     this.props.searchYouTube(options, (data) => {
       this.setState({
         videoList: data,
@@ -36,20 +57,6 @@ class App extends React.Component {
 
   componentDidMount() {
     this.retrieveVideos();
-    // const options = {
-    //   key: window.YOUTUBE_API_KEY,
-    //   max: 5,
-    //   query: 'Jar-Jar Binks'
-    // }
-
-    // const callback = (data) => {
-    //   this.setState({
-    //     videoList: data,
-    //     currentVideo: data[0],
-    //     query: 'Star Wars'
-    //   });
-    // };
-    // this.props.searchYouTube(options, callback);
   }
 
   changeVideo(video) {
@@ -61,24 +68,24 @@ class App extends React.Component {
   we need to create a method that takes in a specific video title that alters the state upon being clicked.
   We need to have the same click event passed down to the children of app
   */
-  // if (_.isNull(this.state.currentVideo)) {
-  //   return (
-  //     <div>
-  //     <nav className="navbar">
-  //       <div className="col-md-6 offset-md-3">
-  //         <div><h5><em><Search/></em> view goes here</h5></div>
-  //       </div>
-  //     </nav>
-  //     </div>
-  //   )
-  // }
 
   render() {
+    if (_.isNull(this.state.currentVideo)) {
+      return (
+        <div>
+          <nav className="navbar">
+            <div className="col-md-6 offset-md-3">
+              <div><h5><em><Search/></em> view goes here</h5></div>
+            </div>
+          </nav>
+        </div>
+      );
+    }
     return (
       <div>
         <nav className="navbar">
           <div className="col-md-6 offset-md-3">
-            <div><h5><em><Search findTextChange={this.findTextChange}/></em> view goes here</h5></div>
+            <div><h5><em><Search searchBtn={this.searchBtnClicked} findTextChange={this.findTextChange}/></em> view goes here</h5></div>
           </div>
         </nav>
         <div className="row">
