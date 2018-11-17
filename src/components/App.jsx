@@ -8,37 +8,14 @@ class App extends React.Component {
       query: 'Star Wars bloopers'
     };
     console.log("props.initialVideos", props.initialVideos);
-    // this.findTextChange = this.findTextChange.bind(this);
+
     this.retrieveVideos = this.retrieveVideos.bind(this);
     this.searchBtnClicked = this.searchBtnClicked.bind(this);
-    // this.secondsPassed = Date.now();
-    // this.initialSearch = true;
-    this.debouncedResultFunc = this.debounce(this.debouncedResultFunc, 1500);
+    this.debouncedResultFunc = _.debounce(this.debouncedResultFunc, 500,{leading: true, trailing: false});
     this.updateQuery = this.updateQuery.bind(this);
     this.searchVideos = this.searchVideos.bind(this);
   }
 
-  debounce(func, wait, immediate) {
-    var timeout;
-    return function executedFunction() {
-      var context = this;
-      var args = arguments;
-      var later = function() {
-        timeout = null;
-        if (!immediate) {
-          func.apply(context, args);
-        }
-      };
-      var callNow = immediate && !timeout;
-      clearTimeout(timeout);
-      timeout = setTimeout(later, wait);
-      if (callNow) {
-        func.apply(context, args);
-      }
-    };
-  }
-  // one function that captures the data from the input
-  // save that value into host function
   updateQuery(e) {
     let query = e.target.value;
     this.setState({
@@ -95,29 +72,15 @@ class App extends React.Component {
       currentVideo: video
     });
   }
-  /*
-  we need to create a method that takes in a specific video title that alters the state upon being clicked.
-  We need to have the same click event passed down to the children of app
-  */
 
   render() {
-    if (_.isNull(this.state.currentVideo)) {
-      return (
-        <div>
-          <nav className="navbar">
-            <div className="col-md-6 offset-md-3">
-              <div><h5><em><Search/></em></h5></div>
-            </div>
-          </nav>
-        </div>
-      );
-    }
+
     return (
       <div>
         <nav className="navbar">
           <div className="col-md-6 offset-md-3">
             <div><h5><em><Search searchBtn={this.searchBtnClicked}
-              findTextChange={this.updateQuery} searchVideos={this.searchVideos}/></em></h5></div>
+              findTextChange={this.updateQuery} /></em></h5></div>
           </div>
         </nav>
         <div className="row">

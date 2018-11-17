@@ -1,11 +1,12 @@
 var searchYouTube = ({ max=5, key=YOUTUBE_API_KEY, query=''}, successCB) => {
   // { max=5, key=YOUTUBE_API_KEY, query=''}
   // write ajax call in this function to get youtube Data from api
-  // var options = {
+  // var options = options || {
   //   key: window.YOUTUBE_API_KEY,
   //   query: 'Star Wars',
   //   max: 5
   // }
+  // 'AIzaSyCpyOuDL6IhjX7cesQRveKjZtRvmxNMvsk' expected to be 'API_KEY'
 
   // why can't we pass in an object literals values to an AJAX GET request?
   // How come destructing works in this case, and the object literal doesn't?

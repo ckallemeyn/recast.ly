@@ -2,7 +2,7 @@
 
 // class video extends React.Component
 // data={this.exampleVideoData}
-console.log(window.searchYouTube);
+// console.log(window.searchYouTube);
 // var videos = [{
 //   kind: '',
 //   etag: '',
@@ -48,7 +48,6 @@ console.log(window.searchYouTube);
 // window.searchYouTube(options, (data)=>{
 //   initialVideos = data;
 // });
-// initialVideos={initialVideos}
 ReactDOM.render(<App searchYouTube={window.searchYouTube}/>,document.getElementById('app'));
 
 
